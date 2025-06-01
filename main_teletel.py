@@ -93,21 +93,21 @@ def page_accueil():
 
     m.cursor(True)
     (zone, touche) = m.waitzones(1)
-
     code = m.zones[0]['texte'].strip().upper()
-if touche == m.envoi:
-    if code == "ULLA":
-        m.home()
-        m._print("Connexion à ULLA...")
-        m.cursor(False)
-        subprocess.run(["python3", "ulla_fixed.py"])
-    elif code == "ANNU":
-        m.home()
-        m._print("Connexion à l'annuaire...")
-        m.cursor(False)
-        subprocess.run(["python3", "example_annuaire_fixed.py"])
-    else:
-        m.message(0, 1, 2, "Code inconnu", bip=True)
+
+    if touche == m.envoi:
+        if code == "ULLA":
+            m.home()
+            m._print("Connexion à ULLA...")
+            m.cursor(False)
+            subprocess.run(["python3", "ulla_fixed.py"])
+        elif code == "ANNU":
+            m.home()
+            m._print("Connexion à l'annuaire...")
+            m.cursor(False)
+            subprocess.run(["python3", "example_annuaire_fixed.py"])
+        else:
+            m.message(0, 1, 2, "Code inconnu", bip=True)
 
 if __name__ == '__main__':
     init()
