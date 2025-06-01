@@ -37,17 +37,19 @@ def page_accueil():
     m.backcolor(m.bleu)
 
     tarifs = [
-        ("t2", "0.37", "t23", "0.45"), ("t22", "0.45 (avantages horaires)"),
-        ("t32", "0.85", "t34", "1.01", "t36", "2.29")
+    ("t2", "0.37"), ("t23", "0.45"),
+    ("t22", "0.45 (avantages horaires)"),
+    ("t32", "0.85"), ("t34", "1.01"), ("t36", "2.29")
     ]
+
     lignes = [8, 9, 10, 11, 12, 13, 14]
     colonnes = [10, 20, 30]
 
     for i, (code, val) in enumerate(tarifs):
         ligne = lignes[i % len(lignes)]
-        col = colonnes[(i // len(lignes)) % 3]
-        m.pos(ligne, col)
-        m._print(f"{code} {val}")
+    col = colonnes[(i // len(lignes)) % len(colonnes)]
+    m.pos(ligne, col)
+    m._print(f"{code} {val}")
 
     m.pos(15, 10)
     m._print("dont F. TELECOM 0,12 à la connexion")
