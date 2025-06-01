@@ -2,6 +2,7 @@
 
 import serial
 import pynitel
+import subprocess
 import time
 
 m = None
