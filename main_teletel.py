@@ -24,9 +24,9 @@ def page_accueil():
     m.xdraw("ecrans/E.TELETEL.vtx")
 
     m.resetzones()
-    m.pos(18, 5)
+    m.pos(17, 5)
     m._print("code du service : ...............")
-    m.zone(18, 25, 8, '', m.jaune)
+    m.zone(17, 25, 8, '', m.jaune)
 
     m.color(m.blanc)
     m.pos(6, 10)
@@ -64,7 +64,7 @@ def page_accueil():
     m.pos(24, 2)
     m._print("1992")
 
-    m.pos(19, 32)
+    m.pos(18, 32)
     m.inverse()
     m._print("Envoi")
     m.inverse(False)
