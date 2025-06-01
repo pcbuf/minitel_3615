@@ -46,7 +46,7 @@ def page_accueil():
 
     # Lignes de mentions légales
     m.pos(11, 10)
-    m._print("dont F. TELECOM 0,12 à la connexion")
+    m._print("dont 0,12 à la connexion")
     m.pos(12, 10)
     m._print("vers les DOM, ajouter 0,33F/min")
     m.pos(13, 10)
