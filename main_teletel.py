@@ -19,89 +19,60 @@ def init():
     return m
 
 def page_accueil():
-    """Affichage de la page d'accueil TELENET 3615 (fixe, pixel près)"""
+    """Affichage de l'écran TELENET 3615 statique avec saisie"""
     global m
     m.home()
     m.cursor(False)
+    m.xdraw("ecrans/E.TELETEL.vtx")
 
-    # Haut de page - logo et Télé tel 3615
-    m.pos(1, 1)
-    m.color(m.blanc)
-    m._print(" ")
-    m.pos(1, 5)
-    m.backcolor(m.bleu)
-    m.color(m.blanc)
-    m._print("Télétel")
-    m.pos(1, 33)
-    m._print("3615")
-
-    # Tarifs
-    m.backcolor(m.noir)
-    m.color(m.blanc)
-    m.pos(3, 5)
-    m._print("0,12F à la connexion, puis:")
-    m.pos(4, 5)
-    m.backcolor(m.rouge)
-    m._print("prix total en F/min TTC")
-
-    lignes_tarif = [
-        ("t2", "0.37"),
-        ("t23", "0.45"),
-        ("t22", "0.45 (avantages horaires)"),
-        ("t32", "0.85"),
-        ("t34", "1.01"),
-        ("t36", "2.29"),
-        ("t44", "2.23")
-    ]
-    row = 5
-    for (code, prix) in lignes_tarif:
-        m.pos(row, 6)
-        m._print(f"{code} : {prix}")
-        row += 1
-
-    m.pos(row, 5)
-    m._print("dont F. TELECOM 0,12 à la connexion")
-    row += 1
-    m.pos(row, 5)
-    m._print("vers les DOM, ajouter 0,33F/min")
-    row += 1
-    m.pos(row, 5)
-    m._print("facturation par Unités Télécom")
-    row += 1
-    m.pos(row, 5)
-    m._print("indivisibles de 0,74F TTC")
-
-    # Zone de saisie : code service
+    # Zone de saisie du code service
     m.resetzones()
-    m.pos(18, 5)
-    m._print("code du service:")
     m.zone(18, 25, 8, '', m.jaune)
 
-    # Bas de page
-    m.pos(22, 1)
-    m._print("ANNUAIRE DES SERVICES")
-    m.pos(23, 1)
-    m._print("et tarifs Télétel")
-    m.pos(24, 1)
-    m._print("affichage du prix      fin")
-
-    m.pos(21, 32)
-    m._print("Envoi")
-    m.pos(22, 32)
-    m.inverse()
-    m._print("Guide")
-    m.inverse(False)
-    m.pos(23, 32)
-    m.color(m.vert)
-    m._print("Sommaire")
-    m.pos(24, 32)
+    # Ajout des textes dynamiques
     m.color(m.blanc)
-    m._print("Cx/Fin")
+    m.pos(6, 6)
+    m._print("0,12F à la connexion, puis:")
+
+    m.backcolor(m.rouge)
+    m.pos(7, 6)
+    m._print("prix total en F/min TTC")
+    m.backcolor(m.bleu)
+
+    tarifs = [
+        ("t2", "0.37", "t32", "0.85", "t36", "2.29"),
+        ("t23", "0.45", "t34", "1.01", "t44", "2.23"),
+        ("t22", "0.45 (avantages horaires)", "", "", "", "")
+    ]
+    ligne = 8
+    for trio in tarifs:
+        m.pos(ligne, 6)
+        m._print("{:5}{:>7}   {:5}{:>7}   {:5}{:>7}".format(*trio))
+        ligne += 1
+
+    m.pos(ligne, 6)
+    m._print("dont F. TELECOM 0,12 à la connexion")
+    ligne += 1
+    m.pos(ligne, 6)
+    m._print("vers les DOM, ajouter 0,33F/min")
+    ligne += 1
+    m.pos(ligne, 6)
+    m._print("facturation par Unités Télécom")
+    ligne += 1
+    m.pos(ligne, 6)
+    m._print("indivisibles de 0,74F TTC")
+
+    # Remplacement (C) France Télécom par Qwest Télécom
+    m.pos(21, 2)
+    m._print("Qwest")
+    m.pos(22, 2)
+    m._print("Telecom")
+    m.pos(23, 2)
+    m._print("1992")
 
     m.cursor(True)
     (zone, touche) = m.waitzones(1)
 
-    # Code saisi (sans effet pour le moment)
     code = m.zones[0]['texte'].strip().upper()
     if touche == m.envoi and code in ['ULLA', 'ANNU', 'POLICE']:
         m.message(0, 1, 2, f"Code {code} reconnu (pas encore actif)", bip=True)
