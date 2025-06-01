@@ -11,7 +11,11 @@ import re
 
 def init():
     "Initialisation du serveur vidéotex"
-    minitel = pynitel.Pynitel(serial.Serial('/dev/ttyUSB0', 1200,
+    minitel = pynitel.Pynitel(serial.Serial('/dev/serial0', 1200,
+              parity=serial.PARITY_EVEN,
+              bytesize=7,
+              stopbits=serial.STOPBITS_ONE,
+              timeout=2)
                                             parity=serial.PARITY_EVEN,
                                             bytesize=7, timeout=2))
     return(minitel)
