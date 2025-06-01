@@ -17,9 +17,7 @@ def init():
               parity=serial.PARITY_EVEN,
               bytesize=7,
               stopbits=serial.STOPBITS_ONE,
-              timeout=2)
-                                      parity=serial.PARITY_EVEN, bytesize=7,
-                                      timeout=2)
+              timeout=2))
 
     if len(sys.argv) > 2:
         (quoi, ou) = (sys.argv[1], sys.argv[2])

@@ -29,10 +29,10 @@ def page_accueil():
     m.zone(18, 25, 8, '', m.jaune)
 
     m.color(m.blanc)
-    m.pos(6, 17)
+    m.pos(6, 10)
     m._print("0,12F à la connexion, puis:")
     m.backcolor(m.rouge)
-    m.pos(7, 17)
+    m.pos(7, 10)
     m._print("prix total en F/min TTC")
     m.backcolor(m.bleu)
 
@@ -41,7 +41,7 @@ def page_accueil():
         ("t32", "0.85"), ("t34", "1.01"), ("t36", "2.29"), ("t44", "2.23")
     ]
     lignes = [8, 9, 10, 11, 12, 13, 14]
-    colonnes = [17, 27, 37]
+    colonnes = [10, 20, 30]
 
     for i, (code, val) in enumerate(tarifs):
         ligne = lignes[i % len(lignes)]
@@ -49,13 +49,13 @@ def page_accueil():
         m.pos(ligne, col)
         m._print(f"{code} {val}")
 
-    m.pos(15, 17)
+    m.pos(15, 10)
     m._print("dont F. TELECOM 0,12 à la connexion")
-    m.pos(16, 17)
+    m.pos(16, 10)
     m._print("vers les DOM, ajouter 0,33F/min")
-    m.pos(17, 17)
+    m.pos(17, 10)
     m._print("facturation par Unités Télécom")
-    m.pos(18, 17)
+    m.pos(18, 10)
     m._print("indivisibles de 0,74F TTC")
 
     m.pos(21, 2)
