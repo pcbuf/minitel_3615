@@ -19,7 +19,7 @@ def init():
               stopbits=serial.STOPBITS_ONE,
               timeout=2)
                                       parity=serial.PARITY_EVEN, bytesize=7,
-                                      timeout=2))
+                                      timeout=2)
 
     if len(sys.argv) > 2:
         (quoi, ou) = (sys.argv[1], sys.argv[2])
@@ -55,9 +55,9 @@ def annuaire_saisie(quoi, ou):
             break
 
     quoi = ("%s %s %s" % (m.zones[0]['texte'], m.zones[1]['texte'],
-                          m.zones[5]['texte'])).strip()
+                          m.zones[5]['texte']).strip()
     ou = ("%s %s %s" % (m.zones[4]['texte'], m.zones[3]['texte'],
-                        m.zones[2]['texte'])).strip()
+                        m.zones[2]['texte']).strip()
     return (touche, quoi, ou)
 
 
@@ -111,15 +111,15 @@ def annuaire118712(qui, ou):
     for p in h.find_all(itemtype="http://schema.org/LocalBusiness"):
         nom = p.find(itemprop="name").a.string.strip()
         result = dict(nom=nom)
-        add_if_not_none(result, 'adresse', p.find(itemprop="streetAddress"))
-        add_if_not_none(result, 'cp', p.find(itemprop="postalCode"))
-        add_if_not_none(result, 'ville', p.find(itemprop="addressLocality"))
-        add_if_not_none(result, 'tel', p.find(itemprop="telephone"))
+        add_if_not_none(result, 'adresse', p.find(itemprop="streetAddress")
+        add_if_not_none(result, 'cp', p.find(itemprop="postalCode")
+        add_if_not_none(result, 'ville', p.find(itemprop="addressLocality")
+        add_if_not_none(result, 'tel', p.find(itemprop="telephone")
         if 'tel' not in result:
             tel = p.find(class_="hidden-phone")
             if tel is not None:
                 result['tel'] = tel['data-wording']
-        add_if_not_none(result, 'categories', p.find(class_="categories"))
+        add_if_not_none(result, 'categories', p.find(class_="categories")
         res.append(result)
     return(res)
 
@@ -140,7 +140,7 @@ def annuaire118218(qui, ou):
             p.address.span.unwrap()
             ville = p.address.span.string.replace('\n', '').strip()
             res.append(dict(nom=p.a.string, adresse=adresse, cp=cp,
-                            ville=ville, tel=p.p.string))
+                            ville=ville, tel=p.p.string)
     # recherche pro
     req = requests.get('http://www.118218.fr/recherche',
                        params={"what": qui, "where": ou})
@@ -154,7 +154,7 @@ def annuaire118218(qui, ou):
             p.address.span.unwrap()
             ville = p.address.span.string.replace('\n', '').strip()
             res.append(dict(nom=p.a.string, adresse=adresse,
-                            cp=cp, ville=ville, tel=p.p.string))
+                            cp=cp, ville=ville, tel=p.p.string)
     return(res)
 
 
@@ -170,7 +170,7 @@ def annu118000(qui, ou):
         if b['data-info'] is not None:
             j = json.loads(b['data-info'])
             res.append(dict(nom=p.h2.a.string, adresse=j['address'],
-                            cp=j['cp'], ville=j['city'], tel=j['tel']))
+                            cp=j['cp'], ville=j['city'], tel=j['tel'])
     return(res)
 
 
@@ -181,7 +181,7 @@ def strformat(left='', right='', fill=' ', width=40):
         out = left + fill * total + right
     else:
         out = left+right
-    print("'"+out+"'", width, total, len(out))
+    print("'"+out+"'", width, total, len(out)
     return(out)
 
 
@@ -205,7 +205,7 @@ def affiche_resultat(quoi, ou, res, annu=''):
             # plusieurs pages ?
             if len(res) > 5:
                 m.pos(1, 37)
-                m._print(" "+str(int(abs(page)))+'/'+str(int((len(res)+4)/5)))
+                m._print(" "+str(int(abs(page))+'/'+str(int((len(res)+4)/5))
                 m.pos(3)
 
             # if len(res)>5:
@@ -230,9 +230,9 @@ def affiche_resultat(quoi, ou, res, annu=''):
                     if 'tel' not in r or r['tel'] == '':
                         r['tel'] = ' (num. masqué)'
                     m.color(m.blanc)
-                    m._print(strformat(right=str(int(a+1)), width=3))
+                    m._print(strformat(right=str(int(a+1), width=3)
                     m._print(' '+strformat(left=r['nom'][:20],
-                                           right=r['tel'], width=36))
+                                           right=r['tel'], width=36)
                     m.color(m.vert)
                     m._print('    '+r['adresse'][:35]+'\x0d\x0a    ' +
                              r['cp']+' '+r['ville']+'\x0d\x0a')

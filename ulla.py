@@ -17,7 +17,7 @@ def init():
               stopbits=serial.STOPBITS_ONE,
               timeout=2)
                                             parity=serial.PARITY_EVEN,
-                                            bytesize=7, timeout=2))
+                                            bytesize=7, timeout=2)
     return(minitel)
 
 
@@ -129,7 +129,7 @@ def ulla_sommaire(minitel, login, mastodon):
             if len(home) > 0:
                 if '_pagination_next' in home[-1]:
                     minitel._print("plus de ")
-                minitel._print(str(len(home)))
+                minitel._print(str(len(home))
                 minitel.forecolor(minitel.vert)
                 if len(home) > 1:
                     minitel._print(" messages reçus")
@@ -189,7 +189,7 @@ def ulla_dialogue_liste(minitel, login, mastodon):
             if f1['acct'] == f2['acct']:
                 followers.remove(f2)
                 f1['follower'] = True
-                print(f1['acct'], len(followers))
+                print(f1['acct'], len(followers)
                 break
     # on ajoute les followers à la liste globale
     for f2 in followers:
@@ -212,12 +212,12 @@ def ulla_dialogue_liste(minitel, login, mastodon):
             page = abs(page)
             pages = round((len(follow)+lignes-1)/lignes)
             minitel.pos(3, 21)
-            minitel._print(strformat(left="%s/%s" % (page, pages), width=10))
+            minitel._print(strformat(left="%s/%s" % (page, pages), width=10)
             for ligne in range(1, lignes+1):
                 minitel.pos(3+ligne)
                 minitel.forecolor(minitel.cyan)
                 debut = (page-1)*lignes
-                minitel._print(strformat(right=str(debut+ligne), width=3))
+                minitel._print(strformat(right=str(debut+ligne), width=3)
                 minitel.forecolor(minitel.bleu)
                 minitel._print("←" if 'follower' in follow[debut+ligne-1] else '̶')  # noqa
                 minitel._print("→" if 'following' in follow[debut+ligne-1] else '̶')  # noqa
@@ -273,7 +273,7 @@ def ulla_portrait(minitel, login, mastodon, qui):
             if '@' in qui:
                 minitel._print(qui.split('@')[0])
                 minitel.forecolor(minitel.vert)
-                minitel._print("@"+(qui.split('@')[1]))
+                minitel._print("@"+(qui.split('@')[1])
             else:
                 minitel._print(qui)
 
@@ -286,7 +286,7 @@ def ulla_portrait(minitel, login, mastodon, qui):
                                                  portrait['following_count']) +
                        '\x0d\x0a')
         minitel._print(re.sub('<.*?>', '', re.sub('<(p|br)>', '\x0d\x0a',
-                                                  portrait['note'])))
+                                                  portrait['note']))
         minitel.pos(20, 31)
         minitel._print(str(portrait['created_at'])[:10])
 
@@ -317,7 +317,7 @@ def ulla_message_envoi(minitel, login, mastodon, qui):
             if '@' in qui:
                 minitel._print(qui.split('@')[0])
                 minitel.forecolor(minitel.vert)
-                minitel._print("@"+(qui.split('@')[1]))
+                minitel._print("@"+(qui.split('@')[1])
             else:
                 minitel._print(qui)
 
@@ -364,14 +364,14 @@ def ulla_message_affiche(minitel, login, mastodon, qui):
             if '@' in qui:
                 minitel._print(qui.split('@')[0])
                 minitel.forecolor(minitel.vert)
-                minitel._print("@"+(qui.split('@')[1]))
+                minitel._print("@"+(qui.split('@')[1])
             else:
                 minitel._print(qui)
 
             minitel.pos(4)
             minitel._print(re.sub('<.*?>', '',
                                   re.sub('<(p|br)>', ' ',
-                                         status['content'])).strip()[:240])
+                                         status['content']).strip()[:240])
 
             if ('in_reply_to_id' in status and
                 status['in_reply_to_id'] is not None):
@@ -379,7 +379,7 @@ def ulla_message_affiche(minitel, login, mastodon, qui):
                     minitel.pos(18)
                     minitel._print(re.sub('<.*?>', '',
                                           re.sub('<(p|br)>', ' ',
-                                                 reply_to['content'])).strip()[:240])
+                                                 reply_to['content']).strip()[:240])
             else:
                 reply_to = None
 
@@ -425,7 +425,7 @@ def ulla():
 
     # affiche la version de l'instance mastodon distante
     minitel.caneol(0, 1)
-    minitel._print("Mastodon v"+mastodon.retrieve_mastodon_version())
+    minitel._print("Mastodon v"+mastodon.retrieve_mastodon_version()
 
     rubrique = ''
     qui = ''
