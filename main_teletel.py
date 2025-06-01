@@ -2,6 +2,7 @@
 
 import serial
 import pynitel
+import time
 
 m = None
 
@@ -24,9 +25,9 @@ def page_accueil():
     m.xdraw("ecrans/E.TELETEL.vtx")
 
     m.resetzones()
-    m.pos(17, 5)
+    m.pos(18, 5)
     m._print("code du service : ...............")
-    m.zone(17, 23, 8, '', m.jaune)
+    m.zone(18, 23, 8, '', m.jaune)
 
     m.color(m.blanc)
     m.pos(6, 10)
@@ -44,9 +45,9 @@ def page_accueil():
     m.pos(10, 10)
     m._print("t32 0.85  t34 1.01  t36 2.29")
 
-    # Lignes de mentions légales
+    # Mentions légales
     m.pos(11, 10)
-    m._print("dont 0,12 à la connexion")
+    m._print("dont F. TELECOM 0,12 à la connexion")
     m.pos(12, 10)
     m._print("vers les DOM, ajouter 0,33F/min")
     m.pos(13, 10)
@@ -54,7 +55,7 @@ def page_accueil():
     m.pos(14, 10)
     m._print("indivisibles de 0,74F TTC")
 
-
+    # Signature bas gauche
     m.pos(21, 2)
     m._print("(C)")
     m.pos(22, 2)
@@ -64,26 +65,27 @@ def page_accueil():
     m.pos(24, 2)
     m._print("1992")
 
-    m.pos(18, 32)
+    # Boutons
+    m.pos(19, 32)
     m.inverse()
     m._print("Envoi")
     m.inverse(False)
 
     m.pos(20, 31)
-    m._print("")
+    m._print("               ")
     m.pos(21, 32)
     m.inverse()
     m._print("Guide")
     m.inverse(False)
 
     m.pos(22, 31)
-    m._print("")
+    m._print("               ")
     m.pos(23, 32)
     m.color(m.vert)
     m._print("Sommaire")
 
     m.pos(24, 31)
-    m._print("")
+    m._print("               ")
     m.pos(24, 32)
     m.color(m.blanc)
     m._print("Cx/Fin")
@@ -104,4 +106,11 @@ def page_accueil():
 if __name__ == '__main__':
     init()
     while True:
-        page_accueil()
+        try:
+            page_accueil()
+        except Exception:
+            m.home()
+            m._print("Erreur série. Reconnexion...")
+            m.cursor(False)
+            time.sleep(2)
+            continue
