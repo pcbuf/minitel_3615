@@ -6,7 +6,6 @@ import pynitel
 m = None
 
 def init():
-    """Initialisation du Minitel avec les bons paramètres"""
     global m
     m = pynitel.Pynitel(serial.Serial(
         '/dev/serial0',
@@ -19,21 +18,19 @@ def init():
     return m
 
 def page_accueil():
-    """Affichage de l'écran TELENET 3615 statique avec saisie"""
     global m
     m.home()
     m.cursor(False)
     m.xdraw("ecrans/E.TELETEL.vtx")
 
-    # Zone de saisie du code service
     m.resetzones()
+    m.pos(18, 5)
+    m._print("code du service :")
     m.zone(18, 25, 8, '', m.jaune)
 
-    # Ajout des textes dynamiques
     m.color(m.blanc)
     m.pos(6, 6)
     m._print("0,12F à la connexion, puis:")
-
     m.backcolor(m.rouge)
     m.pos(7, 6)
     m._print("prix total en F/min TTC")
@@ -45,9 +42,14 @@ def page_accueil():
         ("t22", "0.45 (avantages horaires)", "", "", "", "")
     ]
     ligne = 8
-    for trio in tarifs:
+    for ligne_tarif in tarifs:
         m.pos(ligne, 6)
-        m._print("{:5}{:>7}   {:5}{:>7}   {:5}{:>7}".format(*trio))
+        formatted = ""
+        for i in range(0, 6, 2):
+            code = ligne_tarif[i].ljust(5)
+            val = ligne_tarif[i+1].rjust(10)
+            formatted += code + val + "  "
+        m._print(formatted.rstrip())
         ligne += 1
 
     m.pos(ligne, 6)
@@ -62,13 +64,27 @@ def page_accueil():
     m.pos(ligne, 6)
     m._print("indivisibles de 0,74F TTC")
 
-    # Remplacement (C) France Télécom par Qwest Télécom
     m.pos(21, 2)
-    m._print("Qwest")
+    m._print("(C)")
     m.pos(22, 2)
-    m._print("Telecom")
+    m._print("Qwest")
     m.pos(23, 2)
+    m._print("Telecom")
+    m.pos(24, 2)
     m._print("1992")
+
+    m.pos(21, 32)
+    m._print("Envoi")
+    m.pos(22, 32)
+    m.inverse()
+    m._print("Guide")
+    m.inverse(False)
+    m.pos(23, 32)
+    m.color(m.vert)
+    m._print("Sommaire")
+    m.pos(24, 32)
+    m.color(m.blanc)
+    m._print("Cx/Fin")
 
     m.cursor(True)
     (zone, touche) = m.waitzones(1)
