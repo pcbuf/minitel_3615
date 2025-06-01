@@ -36,21 +36,15 @@ def page_accueil():
     m._print("prix total en F/min TTC")
     m.backcolor(m.bleu)
 
-    tarifs = [
-    ("t2", "0.37"), ("t23", "0.45"),
-    ("t22", "0.45 (avantages horaires)"),
-    ("t32", "0.85"), ("t34", "1.01"), ("t36", "2.29")
-    ]
+    # Trois lignes de tarifs
+    m.pos(8, 10)
+    m._print("t2   0.37     t23  0.45")
+    m.pos(9, 10)
+    m._print("t22  0.45 (avantages horaires)")
+    m.pos(10, 10)
+    m._print("t32  0.85     t34  1.01     t36  2.29")
 
-    lignes = [8, 9, 10]
-    colonnes = [10, 20, 30]
-
-    for i, (code, val) in enumerate(tarifs):
-        ligne = lignes[i % len(lignes)]
-    col = colonnes[(i // len(lignes)) % len(colonnes)]
-    m.pos(ligne, col)
-    m._print(f"{code} {val}")
-
+    # Lignes de mentions légales
     m.pos(15, 10)
     m._print("dont F. TELECOM 0,12 à la connexion")
     m.pos(16, 10)
@@ -59,6 +53,7 @@ def page_accueil():
     m._print("facturation par Unités Télécom")
     m.pos(18, 10)
     m._print("indivisibles de 0,74F TTC")
+
 
     m.pos(21, 2)
     m._print("(C)")
