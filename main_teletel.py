@@ -26,7 +26,7 @@ def page_accueil():
     m.resetzones()
     m.pos(17, 5)
     m._print("code du service : ...............")
-    m.zone(17, 25, 8, '', m.jaune)
+    m.zone(17, 23, 8, '', m.jaune)
 
     m.color(m.blanc)
     m.pos(6, 10)
