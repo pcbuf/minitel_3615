@@ -38,20 +38,20 @@ def page_accueil():
 
     # Trois lignes de tarifs
     m.pos(8, 10)
-    m._print("t2   0.37     t23  0.45")
+    m._print("t2 0.37  t23 0.45")
     m.pos(9, 10)
-    m._print("t22  0.45 (avantages horaires)")
+    m._print("t22 0.45 (avantages horaires)")
     m.pos(10, 10)
-    m._print("t32  0.85     t34  1.01     t36  2.29")
+    m._print("t32 0.85  t34 1.01  t36 2.29")
 
     # Lignes de mentions légales
-    m.pos(15, 10)
+    m.pos(11, 10)
     m._print("dont F. TELECOM 0,12 à la connexion")
-    m.pos(16, 10)
+    m.pos(12, 10)
     m._print("vers les DOM, ajouter 0,33F/min")
-    m.pos(17, 10)
+    m.pos(13, 10)
     m._print("facturation par Unités Télécom")
-    m.pos(18, 10)
+    m.pos(14, 10)
     m._print("indivisibles de 0,74F TTC")
 
 
