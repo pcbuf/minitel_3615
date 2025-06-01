@@ -1,4 +1,7 @@
-def afficher_police():
-    print("\nAccès restreint - 3615 POLICE")
-    print("Connexion impossible. Merci de contacter l’administrateur.")
-    input("\nAppuyez sur ENTREE pour revenir.")
+def run(minitel):
+    minitel.clear()
+    minitel.goto(1, 1)
+    minitel.print("3615 POLICE")
+    minitel.goto(3, 1)
+    minitel.print("Accès restreint. En attente.")
+    minitel.saisie(1)
