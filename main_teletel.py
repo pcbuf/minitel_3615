@@ -70,20 +70,20 @@ def page_accueil():
     m.inverse(False)
 
     m.pos(20, 31)
-    m._print("└───────────────")
+    m._print("")
     m.pos(21, 32)
     m.inverse()
     m._print("Guide")
     m.inverse(False)
 
     m.pos(22, 31)
-    m._print("───────────────┘")
+    m._print("")
     m.pos(23, 32)
     m.color(m.vert)
     m._print("Sommaire")
 
     m.pos(24, 31)
-    m._print("└───────────────")
+    m._print("")
     m.pos(24, 32)
     m.color(m.blanc)
     m._print("Cx/Fin")
