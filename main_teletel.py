@@ -42,7 +42,7 @@ def page_accueil():
     ("t32", "0.85"), ("t34", "1.01"), ("t36", "2.29")
     ]
 
-    lignes = [8, 9, 10, 11, 12, 13, 14]
+    lignes = [8, 9, 10]
     colonnes = [10, 20, 30]
 
     for i, (code, val) in enumerate(tarifs):
