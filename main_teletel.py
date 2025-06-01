@@ -48,7 +48,7 @@ def page_accueil():
 
     # Mentions légales
     m.pos(11, 10)
-    m._print("dont 0,12F à la connexion")
+    m._print("dont 0,12 à la connexion")
     m.pos(12, 10)
     m._print("vers les DOM, ajouter 0,33F/min")
     m.pos(13, 10)
@@ -95,14 +95,19 @@ def page_accueil():
     (zone, touche) = m.waitzones(1)
 
     code = m.zones[0]['texte'].strip().upper()
-    if touche == m.envoi and code in ['POLICE']:
-        m.message(0, 1, 2, f"Code {code} reconnu (pas encore actif)", bip=True)
-    elif touche == m.envoi:
+if touche == m.envoi:
+    if code == "ULLA":
+        m.home()
+        m._print("Connexion à ULLA...")
+        m.cursor(False)
+        subprocess.run(["python3", "ulla_fixed.py"])
+    elif code == "ANNU":
+        m.home()
+        m._print("Connexion à l'annuaire...")
+        m.cursor(False)
+        subprocess.run(["python3", "example_annuaire_fixed.py"])
+    else:
         m.message(0, 1, 2, "Code inconnu", bip=True)
-    elif touche == m.sommaire:
-        m.message(0, 1, 2, "Retour sommaire", bip=True)
-    elif touche == m.guide:
-        m.message(0, 1, 2, "Guide non disponible", bip=True)
 
 if __name__ == '__main__':
     init()
