@@ -4,6 +4,7 @@ import serial
 import pynitel
 import subprocess
 import time
+import os
 
 m = None
 
@@ -100,12 +101,12 @@ def page_accueil():
             m.home()
             m._print("Connexion à ULLA...")
             m.cursor(False)
-            subprocess.run(["python3", "ulla_fixed.py"])
+            os.execv("/usr/bin/python3", ["python3", "ulla_fixed.py"])
         elif code == "ANNU":
             m.home()
             m._print("Connexion à l'annuaire...")
             m.cursor(False)
-            subprocess.run(["python3", "example_annuaire_fixed.py"])
+            os.execv("/usr/bin/python3", ["python3", "example_annuaire_fixed.py"])
         else:
             m.message(0, 1, 2, "Code inconnu", bip=True)
 
