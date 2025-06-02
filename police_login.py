@@ -19,12 +19,12 @@ m._print(m.PRO2 + '\x6D\x4A')
 
 # Saisie login
 m._print("\r\nIdentifiant : ")
-(login, touche) = m.input(2, 15, 20, data='')
+(login, touche) = m.input(3, 15, 20, data='')
 login = login.strip().upper()
 
 # Saisie mot de passe
 m._print("\r\nMot de passe : ")
-(password, touche) = m.input(3, 15, 20, data='', caractere='*')
+(password, touche) = m.input(4, 15, 20, data='', caractere='*')
 password = password.strip().upper()
 
 # Vérification

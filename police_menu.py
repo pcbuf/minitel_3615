@@ -60,14 +60,8 @@ elif choix == "28":
             admin_mode = True
             prompt = "root@serveur-police: $ "
             ligne += 1
-        elif admin_mode and cmd == "police-hub --force-access":
-            m.pos(ligne, 1)
-            m._print("Accès en cours...")
-            m.attend(100)
-            ligne += 1
-            m.pos(ligne, 1)
-            m._print("*** MODULE DE PIRATAGE À VENIR ***")
-            break
+        elif admin_mode and cmd == "policehub--force":
+            os.execv("/usr/bin/python3", ["python3", "pirate_minigame.py"])
         elif cmd in ["ls", "dir"]:
             fake_files = [
                 "logs/",
