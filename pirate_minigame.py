@@ -83,9 +83,9 @@ while not jeu_termine:
     if touche == m.retour:
         os.execv("/usr/bin/python3", ["python3", "police_menu.py"])
 
-    if touche == m.haut or cmd.upper() == "A":
+    if cmd.upper() == "A":
         ligne_curseur = max(0, ligne_curseur - 1)
-    elif touche == m.bas or cmd.upper() == "Q":
+    elif cmd.upper() == "Q":
         ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
 
     elif touche in [m.envoi, m.entree, m.espace]:
