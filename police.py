@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import serial, pynitel
+import os
 
 m = pynitel.Pynitel(serial.Serial('/dev/serial0', 1200,
     parity=serial.PARITY_EVEN,
@@ -26,12 +27,24 @@ m.canblock(23, 40, 1)
 
 if choix == "1":
     m.message(0, 1, 2, "SERVICE TEMPORAIREMENT INDISPONIBLE", bip=True)
+    import time
+    time.sleep(2)
+    os.execv("/usr/bin/python3", ["python3", "police.py"])
 elif choix == "2":
     m.message(0, 1, 2, "ALLEZ AU COMMISSARIAT, FEIGNASSE", bip=True)
+    import time
+    time.sleep(2)
+    os.execv("/usr/bin/python3", ["python3", "police.py"])
 elif choix == "3":
     m.message(0, 1, 2, "ALORS VOUS, PENDANT LA GUERRE....", bip=True)
+    import time
+    time.sleep(2)
+    os.execv("/usr/bin/python3", ["python3", "police.py"])
 elif choix == "4":
     m.home()
     m._print("=== ACCÈS AU SERVEUR POLICE ===\r\n\r\nIdentifiant: ........\r\nMot de passe: ........")
 else:
     m.message(0, 1, 2, "Choix invalide", bip=True)
+    import time
+    time.sleep(2)
+    os.execv("/usr/bin/python3", ["python3", "police.py"])
