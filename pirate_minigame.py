@@ -77,8 +77,15 @@ jeu_termine = False
 while not jeu_termine:
     m.cursor(True)
     m.pos(4 + ligne_curseur, 1)
-    (cmd, touche) = m.input(4 + ligne_curseur, 1, 0, "", redraw=True)
+    (cmd, touche) = m.input(4 + ligne_curseur, 1, 1, data='', caractere=' ', redraw=True)
     m.cursor(False)
+    car = cmd.upper() if cmd else ""
+
+    if car == "A":
+        ligne_curseur = max(0, ligne_curseur - 1)
+    elif car == "Q":
+        ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
+
 
     if touche == m.retour:
         os.execv("/usr/bin/python3", ["python3", "police_menu.py"])
@@ -88,7 +95,7 @@ while not jeu_termine:
     elif cmd.upper() == "Q":
         ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
 
-    elif touche in [m.envoi, m.entree, m.espace]:
+    elif touche in [m.envoi, m.espace] or car == "":
         if pulses_joueur > 0:
             valider_node(ligne_curseur)
             pulses_joueur -= 1
