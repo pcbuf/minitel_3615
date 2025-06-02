@@ -38,16 +38,57 @@ if choix in [str(i) for i in range(1, 12)]:
 
 elif choix == "28":
     m.home()
-    m._print("root@serveur-police:~#")
-    (cmd, t) = m.input(1, 24, 32, data='')
-    if cmd.strip() == "sudo police-hub --force-access":
-        m._print("\r\nAccès en cours...\r\n")
-        m.attend(100)
-        m._print("\r\n*** MODULE DE PIRATAGE À VENIR ***")
-    else:
-        m._print("\r\nCommande inconnue")
-        time.sleep(2)
-        retour_menu()
+    admin_mode = False
+    prompt = "root@serveur-police: # "
+    ligne = 1
+    while True:
+        m.pos(ligne, 1)
+        m._print(prompt)
+        (cmd, touche) = m.input(ligne, len(prompt) + 1, 40 - len(prompt))
+        cmd = cmd.strip()
+        ligne += 1
+
+        if cmd == "":
+            continue
+        elif cmd == "exit":
+            retour_menu()
+        elif cmd == "reboot":
+            os.execv("/usr/bin/python3", ["python3", "main_teletel.py"])
+        elif cmd == "sudo":
+            m.pos(ligne, 1)
+            m._print("mode administrateur activé")
+            admin_mode = True
+            prompt = "root@serveur-police: $ "
+            ligne += 1
+        elif admin_mode and cmd == "police-hub --force-access":
+            m.pos(ligne, 1)
+            m._print("Accès en cours...")
+            m.attend(100)
+            ligne += 1
+            m.pos(ligne, 1)
+            m._print("*** MODULE DE PIRATAGE À VENIR ***")
+            break
+        elif cmd in ["ls", "dir"]:
+            fake_files = [
+                "logs/",
+                "dossiers_suspects/",
+                "rapports_missions.txt",
+                "confidential/",
+                "acces_reseau/",
+                "archive_2021.zip",
+                "recherche/",
+                "agents.csv",
+                "README_SYS.md",
+                "sysconfig/"
+            ]
+            for f in fake_files:
+                m.pos(ligne, 1)
+                m._print(f)
+                ligne += 1
+        else:
+            m.pos(ligne, 1)
+            m._print("Commande inconnue")
+            ligne += 1
 else:
     m.message(0, 1, 2, "Choix invalide", bip=True)
     time.sleep(2)
