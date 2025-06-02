@@ -46,7 +46,7 @@ elif choix == "28":
         m._print(prompt)
         (cmd, touche) = m.input(ligne, len(prompt) + 1, 40 - len(prompt))
         cmd = cmd.strip()
-        cmd = cmd.loweer()
+        cmd = cmd.lower()
         ligne += 1
 
         if cmd == "":
