@@ -107,6 +107,11 @@ def page_accueil():
             m._print("Connexion à l'annuaire...")
             m.cursor(False)
             os.execv("/usr/bin/python3", ["python3", "example_annuaire_fixed.py"])
+        elif code == "POLICE":
+            m.home()
+            m._print("Connexion à au service de Police Nationale...")
+            m.cursor(False)
+            os.execv("/usr/bin/python3", ["python3", "police.py"])
         else:
             m.message(0, 1, 2, "Code inconnu", bip=True)
 
