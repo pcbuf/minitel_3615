@@ -22,7 +22,7 @@ m.cursor(True)
 choix = m.zones[0]['texte'].strip()
 
 m.cursor(False)
-m.canbloc(23, 40, 1)
+m.canblock(23, 40, 1)
 
 if choix == "1":
     m.message(0, 1, 2, "SERVICE TEMPORAIREMENT INDISPONIBLE", bip=True)
