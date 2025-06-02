@@ -41,8 +41,7 @@ elif choix == "3":
     time.sleep(2)
     os.execv("/usr/bin/python3", ["python3", "police.py"])
 elif choix == "4":
-    m.home()
-    m._print("=== ACCÈS AU SERVEUR POLICE ===\r\n\r\nIdentifiant: ........\r\nMot de passe: ........")
+    os.execv("/usr/bin/python3", ["python3", "police_login.py"])
 else:
     m.message(0, 1, 2, "Choix invalide", bip=True)
     import time
