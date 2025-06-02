@@ -45,3 +45,17 @@ This example simulates the famous "3615 ULLA" a chat and messaging pink Minitel 
 
 **To test**: `python3 ulla.py [mastodon_account password]`
 **Example**: `python3 ulla.py cquest@amicale.net mypassword`
+
+---
+
+## 🔐 Jeu - Solutions aux énigmes
+
+### Serveur POLICE
+- Identifiant : `H.GONTIER`
+- Mot de passe : `GADGET`
+
+### Accès pirate
+- Commande à taper : `sudo police-hub --force-access`
+
+(Note : ces infos sont à jour pour les tests ou la mise en place des énigmes)
+
