@@ -7,112 +7,115 @@ m = pynitel.Pynitel(serial.Serial('/dev/serial0', 1200,
     stopbits=serial.STOPBITS_ONE,
     timeout=2))
 
-WIDTH = 40
-HEIGHT = 24
-NODE_COUNT = 5
-IA_INTERVAL = 3  # seconds
-TIME_LIMIT = 30  # seconds
-
-# Initialisation
+# Setup initial
 m.home()
 m.cursor(False)
-m._print(">> PIRATAGE EN COURS <<\r\n")
 
-# Génération de 5 nœuds aléatoires
-nodes = []
-while len(nodes) < NODE_COUNT:
-    x, y = random.randint(5, WIDTH - 5), random.randint(4, HEIGHT - 4)
-    if (x, y) not in nodes:
-        nodes.append((x, y))
+WIDTH, HEIGHT = 40, 24
+total_nodes = 11
+nodes_valides = [False] * total_nodes
+pulses_joueur = 5
+pulses_ia = 5
+ligne_curseur = 5
+ligne_ia = 14
 
-# Statuts : 0 = neutre, 1 = joueur, 2 = IA
-statuses = {pos: 0 for pos in nodes}
-start_time = time.time()
-last_ia_time = start_time
-ia_interval = random.randint(3, 6)
+def afficher_interface():
+    m.home()
+    # Ligne des pulses
+    m.color(m.vert)
+    m.pos(1, 1)
+    m._print("●" * pulses_joueur)
+    m.color(m.rouge)
+    m.pos(1, WIDTH - 4)
+    m._print("●" * pulses_ia)
 
-# Dessin initial
-for (x, y) in nodes:
-    m.pos(y, x)
-    m.forecolor(m.blanc)
-    m._print("O")
+    # Ligne sécurités
+    m.color(m.blanc)
+    m.pos(2, 2)
+    m._print("Sécurités : ")
+    for ok in nodes_valides:
+        if ok:
+            m.color(m.vert)
+            m._print("█")
+        else:
+            m.color(m.blanc)
+            m._print("*")
 
-# Curseur de l'utilisateur
-cursor_x, cursor_y = nodes[0]
+    # Quelques pulsers et nodes simulés
+    for i in range(total_nodes):
+        y = 4 + i
+        m.color(m.jaune)
+        m.pos(y, 1)
+        m._print("P")  # pulser joueur
+        m.pos(y, WIDTH)
+        m._print("P")  # pulser IA
 
-def draw_cursor():
-    m.pos(cursor_y, cursor_x)
-    m.inverse()
-    m._print("O")
-    m.inverse(False)
+        m.color(m.cyan if not nodes_valides[i] else m.vert)
+        m.pos(y, WIDTH // 2)
+        m._print("▒" if not nodes_valides[i] else "0")
 
-def update_display():
-    for (x, y), status in statuses.items():
-        m.pos(y, x)
-        if status == 0:
-            m.forecolor(m.blanc)
-        elif status == 1:
-            m.forecolor(m.vert)
-        elif status == 2:
-            m.forecolor(m.rouge)
-        m._print("O")
+        m.color(m.blanc)
+        m.pos(y, WIDTH // 2 - 4)
+        m._print("S")  # splitter
+        m.pos(y, WIDTH // 2 + 4)
+        m._print("J")  # joiner
 
-draw_cursor()
+def valider_node(i):
+    nodes_valides[i] = True
 
-# Boucle de jeu
-while True:
-    if time.time() - start_time > TIME_LIMIT:
-        m.pos(HEIGHT, 1)
-        m._print("Temps écoulé. Échec du piratage.")
-        break
+def invalider_node(i):
+    nodes_valides[i] = False
 
-    if list(statuses.values()).count(2) >= NODE_COUNT:
-        m.pos(HEIGHT, 1)
-        m._print("IA a pris le contrôle. Échec du piratage.")
-        break
-        m.pos(HEIGHT, 1)
-        m._print("IA a pris le contrôle. Échec du piratage.")
-        break
+afficher_interface()
 
-    if list(statuses.values()).count(1) >= NODE_COUNT:
-        m.pos(HEIGHT, 1)
-        m._print("Succès ! Accès au serveur accordé.")
-        break
+start = time.time()
+dernier_deplacement_ia = start
+etat_ia = "deplacement"
+temps_attente = 1
+jeu_termine = False
 
-    m.pos(HEIGHT, 1)
-    m._print("Noeuds Joueur: %d / IA: %d       " % (
-        list(statuses.values()).count(1),
-        list(statuses.values()).count(2)
-    ))
-
+while not jeu_termine:
     m.cursor(True)
-    m.pos(cursor_y, cursor_x)
-    (cmd, touche) = m.input(cursor_y, cursor_x, 0, '', redraw=True)
+    m.pos(4 + ligne_curseur, 1)
+    (cmd, touche) = m.input(4 + ligne_curseur, 1, 0, "", redraw=True)
     m.cursor(False)
 
     if touche == m.retour:
         os.execv("/usr/bin/python3", ["python3", "police_menu.py"])
 
-    if (cursor_x, cursor_y) in statuses and statuses[(cursor_x, cursor_y)] == 0:
-        statuses[(cursor_x, cursor_y)] = 1
-        update_display()
+    if touche == m.haut or cmd.upper() == "A":
+        ligne_curseur = max(0, ligne_curseur - 1)
+    elif touche == m.bas or cmd.upper() == "Q":
+        ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
 
-    if touche == m.haut and cursor_y > 1:
-        cursor_y -= 1
-    elif touche == m.bas and cursor_y < HEIGHT:
-        cursor_y += 1
-    elif touche == m.gauche and cursor_x > 1:
-        cursor_x -= 1
-    elif touche == m.droite and cursor_x < WIDTH:
-        cursor_x += 1
+    elif touche in [m.envoi, m.entree, m.espace]:
+        if pulses_joueur > 0:
+            valider_node(ligne_curseur)
+            pulses_joueur -= 1
+            afficher_interface()
 
-    # Tour de l'IA
-    if time.time() - last_ia_time >= ia_interval:
-        for pos in statuses:
-            if statuses[pos] == 0:
-                statuses[pos] = 2
-                break
-        update_display()
-        last_ia_time = time.time()
-        ia_interval = random.randint(3, 6)
+    # Tour IA toutes les secondes
+    if time.time() - dernier_deplacement_ia >= 1:
+        if etat_ia == "deplacement":
+            ligne_ia = random.randint(0, total_nodes - 1)
+            etat_ia = "tir"
+            dernier_deplacement_ia = time.time()
+        elif etat_ia == "tir":
+            if pulses_ia > 0:
+                invalider_node(ligne_ia)
+                pulses_ia -= 1
+                afficher_interface()
+            etat_ia = "deplacement"
+            dernier_deplacement_ia = time.time()
 
+    # Vérifications fin de jeu
+    if all(nodes_valides):
+        m.pos(HEIGHT, 1)
+        m._print("ACCES ACCORDE")
+        time.sleep(3)
+        jeu_termine = True
+    elif pulses_joueur == 0 and not any(nodes_valides):
+        m.pos(HEIGHT, 1)
+        m._print("ACCES REFUSE")
+        time.sleep(3)
+        os.execv("/usr/bin/python3", ["python3", "police_menu.py"])
