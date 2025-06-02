@@ -79,6 +79,7 @@ while not jeu_termine:
     m.pos(4 + ligne_curseur, 1)
     (cmd, touche) = m.input(4 + ligne_curseur, 1, 1, data='', caractere=' ', redraw=True)
     m.cursor(False)
+    
     car = cmd.upper() if cmd else ""
 
     if car == "A":
@@ -86,20 +87,15 @@ while not jeu_termine:
     elif car == "Q":
         ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
 
-
     if touche == m.retour:
         os.execv("/usr/bin/python3", ["python3", "police_menu.py"])
 
-    if cmd.upper() == "A":
-        ligne_curseur = max(0, ligne_curseur - 1)
-    elif cmd.upper() == "Q":
-        ligne_curseur = min(total_nodes - 1, ligne_curseur + 1)
-
-    elif touche in [m.envoi, m.espace] or car == "":
+    elif car == " " or touche == m.envoi or car == "":
         if pulses_joueur > 0:
             valider_node(ligne_curseur)
             pulses_joueur -= 1
             afficher_interface()
+
 
     # Tour IA toutes les secondes
     if time.time() - dernier_deplacement_ia >= 1:
