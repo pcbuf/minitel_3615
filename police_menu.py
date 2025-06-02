@@ -60,7 +60,7 @@ elif choix == "28":
             admin_mode = True
             prompt = "root@serveur-police: $ "
             ligne += 1
-        elif admin_mode and cmd == "police-hub --force-access":
+        elif admin_mode and cmd == "policehub--force-access":
             m.pos(ligne, 1)
             m._print("Accès en cours...")
             m.attend(100)
